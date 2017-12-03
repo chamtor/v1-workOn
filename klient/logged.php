@@ -41,11 +41,34 @@ echo "Ostatnia nieudana próba logowanie nastąpiła:"." ".$_SESSION['TimeNieuda
 
 <p><a href="http://www.lukasz-zdunowski.com.pl/public_html/lab7/klient/qwe">Twoje pliki.</a></p>
 
+
+<?php
+$user = $_SESSION['user1'];
+
+$dir = $user.'/';
+
+
+if ($handle = opendir($dir)) {
+   /* echo "Directory handle: $handle\n";
+    echo "Entries:\n";
+*/
+    /* This is the correct way to loop over the directory. */
+    while (false !== ($entry = readdir($handle))) {
+      echo "<a href='download.php?file=".$entry."'>".$entry."</a>\n";    }
+    closedir($handle);
+}
+?>
 <form method="post" action="nowy_folder.php">
       <input type="text" name="nazwa_folderu" size="10" maxlength="10" required>
       <input type="submit" value="Stórz nowy folder!">
  </form>
 <br><br>
+
+<?php
+foreach (glob($user.'/'."*.*") as $filename) {
+    echo "$filename size" . filesize($filename) . "\n";
+}
+?>
 
 
 <form action="odbierz.php" method="POST" ENCTYPE="multipart/form-data"> 
