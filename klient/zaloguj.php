@@ -49,16 +49,23 @@ session_start();
 							unset($_SESSION['utworzenie']);
 					   		unset($_SESSION['utworzenie2']);	
 							header('Location: logowanie.php');
-							}else{
-								
-								//$_SESSION['blokada'] = 	
 							}
+						elseif($liczbaProb>=4){
+								
+							
 							$updateT = mysqli_query($link, "UPDATE logi SET data ='$dateee' WHERE login='$user' ");
 							$updateTime1 = mysqli_query($link, "SELECT data  FROM logi  WHERE login='$user' ");
 							while ($row = $updateTime1->fetch_assoc()) {
 							    $updateTime2 = $row['data']."<br>";
 							}
 							$_SESSION['TimeNieudanaProba'] = $updateTime2;
+							unset($_SESSION['blad']);
+							$_SESSION['blokadaLogowania'] = 'Nieudane próby logowania - konto zostało zablokowane na minute';
+
+							header('Location: logowanie.php');
+							//$_SESSION['blok'] = 
+						}
+
 					}
 				}	
 	

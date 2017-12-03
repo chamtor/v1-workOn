@@ -39,6 +39,12 @@ exit();
   if(isset($_SESSION['blad'])) {
     unset($_SESSION['zle']);
     echo $_SESSION['blad'];
+
+   if(isset($_SESSION['blokadaLogowania'])){
+    unset($_SESSION['zle']);
+    unset($_SESSION['blad']);
+    echo $_SESSION['blokadaLogowania'];
+}
   }
 ?>
 
@@ -49,7 +55,7 @@ exit();
   Login:<br/> <input type="text" name="login" required> <br/>
   Hasło: <br/> <input type="password" id='pass1' name="pass1" required name=up> <br/>
   Powtórz hasło: <br/> <input type="password" id='pass2' required="pass1"> <br/> 
-   <!--Login:<input type="password" placeholder="Password" id="password" required>
+  <!--Login:<input type="password" placeholder="Password" id="password" required>
   Hasło:<input type="password" placeholder="Confirm Password" id="confirm_password" required>
   -->
   
