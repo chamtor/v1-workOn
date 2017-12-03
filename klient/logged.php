@@ -47,14 +47,13 @@ $user = $_SESSION['user1'];
 
 $dir = $user.'/';
 
-
 if ($handle = opendir($dir)) {
-   /* echo "Directory handle: $handle\n";
-    echo "Entries:\n";
-*/
-    /* This is the correct way to loop over the directory. */
     while (false !== ($entry = readdir($handle))) {
-      echo "<a href='download.php?file=".$entry."'>".$entry."</a>\n";    }
+          if ($entry != "." && $entry != "..") {
+            echo "<a href='download.php?file=".$entry."'>".$entry."</a>\n";
+        }
+      //echo "<a href='download.php?file=".$entry."'>".$entry."</a>\n";    
+    }
     closedir($handle);
 }
 ?>

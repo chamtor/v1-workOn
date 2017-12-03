@@ -36,7 +36,12 @@ session_start();
 					header('Location: logged.php');
 					$_SESSION['user'] = '$user';
 					$_SESSION['logged'] = true;
-					mkdir($user);
+					
+					if(!is_dir($user)){
+						mkdir($user);
+
+					}
+
 
 					}
 				else

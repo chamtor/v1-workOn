@@ -3,8 +3,8 @@ session_start();
 $user = $_SESSION['user1'];
 $folder = $_POST['nazwa_folderu'];
 
-if (!file_exists('/public_html/lab7/klient/$user/$folder')) {
-    mkdir('/public_html/lab7/klient/$user/', 0777, true);
+if (!file_exists('/public_html/lab7/klient/'.$user.'/'.$folder)) {
+    mkdir('/public_html/lab7/klient/'.$user.'/', 0777, true);
     //echo "<b>Folder o nazwie: <i>$folder</i> został utworzony!</b>";
     echo("<script>alert(<b>Folder o nazwie: <i>$folder</i> został utworzony!</b>)</script>");
   	echo("<script>alert(Za chwilę nastąpi przekierowanie...)</script>");

@@ -58,7 +58,6 @@ exit();
   <!--Login:<input type="password" placeholder="Password" id="password" required>
   Hasło:<input type="password" placeholder="Confirm Password" id="confirm_password" required>
   -->
-  
   <input type="submit" value="Register"/><br>
 </form>
 

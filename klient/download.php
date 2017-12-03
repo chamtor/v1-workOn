@@ -1,8 +1,10 @@
 <?php
 session_start();
+$user = $_SESSION['user1'];
+
 
 $file = basename($_GET['file']);
-$file = '/path/to/your/dir/'.$file;
+$file = '/public_html/lab7/klient/'.$user.'/'.$file;
 
 if(!$file){ // file does not exist
     die('file not found');
@@ -14,6 +16,6 @@ if(!$file){ // file does not exist
     header("Content-Transfer-Encoding: binary");
 
     // read the file from disk
-    readfile($file);
+    //readfile($file);
 }
 ?>

@@ -42,8 +42,8 @@ if (is_uploaded_file($_FILES['plik']['tmp_name']))
 
 			move_uploaded_file($_FILES['plik']['tmp_name'],$target.$_FILES['plik']['name']);
 			//echo("<script>alert(Za chwilę nastąpi przekierowanie...)</script>");
-			//sleep(5);
-			//echo("<script>window.location = '../klient/logged.php';</script>");
+			sleep(5);
+			echo("<script>window.location = '../klient/logged.php';</script>");
 		}
 	}
 else {echo 'Błąd przy przesyłaniu danych!';}
