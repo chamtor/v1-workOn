@@ -6,6 +6,13 @@ header('Location: logged.php');
 exit();
 }
 ?>
+<?php
+if((time() - $_SESSION['time_of_block']) > 180) {
+//allow submission
+} else {
+echo 'You have attempted to login 3 times, please try again later!';
+}
+?>
 
 <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
 <html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"pl-PL\">
@@ -14,9 +21,7 @@ exit();
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>Zdunowski</title>
 
-    
 </head>
-
 <body>
 
 <ul>

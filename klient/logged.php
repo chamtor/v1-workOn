@@ -1,11 +1,11 @@
 <?php
 session_start();
-/*if((isset($_SESSION['logged'])) && ($_SESSION['logged']==true))
+if((isset($_SESSION['logged'])) && ($_SESSION['logged']==true))
 {
 }else{
   header('Location: logged.php');
   exit();
-}*/
+}
 ?>
 <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
 <html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"pl-PL\">
@@ -38,36 +38,32 @@ echo "Ostatnia nieudana próba logowanie nastąpiła:"." ".$_SESSION['TimeNieuda
 ?> 
 <br><br>
 
-
-<p><a href="http://www.lukasz-zdunowski.com.pl/public_html/lab7/klient/qwe">Twoje pliki.</a></p>
-
-
 <?php
 $user = $_SESSION['user1'];
-
 $dir = $user.'/';
 
 if ($handle = opendir($dir)) {
     while (false !== ($entry = readdir($handle))) {
           if ($entry != "." && $entry != "..") {
-            echo "<a href='download.php?file=".$entry."'>".$entry."</a>\n";
+          //  echo "<a href='download.php?file=".$entry."'>".$entry."</a>\n";
+            echo "<a href='./$user/$entry' download>".$entry."</a><br>";
+         
+          //  echo $entry;
+            echo '<br>';
         }
-      //echo "<a href='download.php?file=".$entry."'>".$entry."</a>\n";    
     }
     closedir($handle);
 }
 ?>
-<form method="post" action="nowy_folder.php">
+<br>
+
+<br>
+<form method="POST" action="nowy_folder.php">
       <input type="text" name="nazwa_folderu" size="10" maxlength="10" required>
       <input type="submit" value="Stórz nowy folder!">
  </form>
 <br><br>
 
-<?php
-foreach (glob($user.'/'."*.*") as $filename) {
-    echo "$filename size" . filesize($filename) . "\n";
-}
-?>
 
 
 <form action="odbierz.php" method="POST" ENCTYPE="multipart/form-data"> 

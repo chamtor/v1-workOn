@@ -10,7 +10,6 @@ session_start();
 	$dateee = date("F j, Y, g:i a"); 
 	setcookie('Nick', $user,time()+60*60);
 
-
 	$blokada = mysqli_query($link, "SELECT proby FROM logi WHERE login='$user'");
 
 	while ($row = $blokada->fetch_assoc()) {
@@ -38,7 +37,7 @@ session_start();
 					$_SESSION['logged'] = true;
 					
 					if(!is_dir($user)){
-						mkdir($user);
+						mkdir($user, 0777);
 
 					}
 
@@ -57,7 +56,7 @@ session_start();
 							}
 						elseif($liczbaProb>=4){
 								
-							
+							$_SESSION['time_of_block'] = time();
 							$updateT = mysqli_query($link, "UPDATE logi SET data ='$dateee' WHERE login='$user' ");
 							$updateTime1 = mysqli_query($link, "SELECT data  FROM logi  WHERE login='$user' ");
 							while ($row = $updateTime1->fetch_assoc()) {
@@ -67,7 +66,7 @@ session_start();
 							unset($_SESSION['blad']);
 							$_SESSION['blokadaLogowania'] = 'Nieudane próby logowania - konto zostało zablokowane na minute';
 
-							header('Location: logowanie.php');
+							header('Location: asd.php');
 							//$_SESSION['blok'] = 
 						}
 
