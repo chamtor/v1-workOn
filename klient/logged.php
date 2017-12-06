@@ -37,23 +37,53 @@ echo "Ostatnia nieudana próba logowanie nastąpiła:"." ".$_SESSION['TimeNieuda
 } 
 ?> 
 <br><br>
-
+Twoje pliki:
+<br>
 <?php
 $user = $_SESSION['user1'];
 $dir = $user.'/';
 
-if ($handle = opendir($dir)) {
-    while (false !== ($entry = readdir($handle))) {
+$handle = opendir($dir);
+    while ($entry = readdir($handle)) {
           if ($entry != "." && $entry != "..") {
-          //  echo "<a href='download.php?file=".$entry."'>".$entry."</a>\n";
+        // if(file_exists($entry)){
+            //echo "<a href='download.php?file=".$entry."'>".$entry."</a>\n";
             echo "<a href='./$user/$entry' download>".$entry."</a><br>";
-         
           //  echo $entry;
             echo '<br>';
+    // }if($entry = "*.*"){
+     // echo 'folder'.$entry;
+     }
+  }
+    closedir($handle);
+
+
+    foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir)) as $f) {
+    echo "$f \r\n".'<br>';   
+}
+
+
+
+if ($handle = opendir('.')) {
+
+    while (false !== ($entry = readdir($handle))) {
+
+        if ($entry != "." && $entry != "..") {
+
+            echo "$entry\n";
         }
     }
+
     closedir($handle);
 }
+echo '<br>';
+
+
+$files = scandir($dir);
+$files = array_diff(scandir($dir), array('.', '..'));
+echo $files;
+
+
 ?>
 <br>
 
@@ -79,17 +109,31 @@ if ($handle = opendir($dir)) {
  
   function drag_drop(event) { location.href = 'odbierz.php'; 
 }
-/*function drag_drop(event){
-    event.prevenDefault();
-    alert(event.dataTransfer.files[0]);
-  }*/
-
 </script>
 <div id="drop_zone" ondrop="drag_drop(event)" ondragover="return false">Drop Here</div>
  <input type="file" name="plik" multiple="multiple">
    <input type="submit" value="Wyślij plik"/> 
+</form>
+
+
+
+
+<form>
+  <script type="text/javascript">
+    
+    fs.readFile('asd/', (err, data) => {
+  if (err) throw err;
+     console.log(data);
+  });
+
+  </script>
+
 
 </form>
+
+
+
+
 <br>
 </table>
 </body>
