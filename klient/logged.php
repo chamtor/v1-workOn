@@ -12,6 +12,7 @@ if((isset($_SESSION['logged'])) && ($_SESSION['logged']==true))
 <head>
     <meta http-equiv="refresh" content="1000" /> 
     <link rel="stylesheet" type="text/css" href="style.css">
+  
     <title>Zdunowski</title>
 
 </head>
@@ -40,52 +41,46 @@ echo "Ostatnia nieudana próba logowanie nastąpiła:"." ".$_SESSION['TimeNieuda
 Twoje pliki:
 <br>
 <?php
-$user = $_SESSION['user1'];
+$userr = $_SESSION['user1'];
+chdir($userr);
+
+foreach(glob("*.*") as $entry){
+    //echo basename($entry)."<br>";
+    if ($entry != "." && $entry != "..") {
+        echo "<a href='./$user/$entry' download>".$entry."</a><br>";
+      }
+}
+?>
+<br>
+Twoje Foldery:
+<br>
+
+
+
+
+</div>
+
+
+
+<?php
+
+$userr = $_SESSION['user1'];
+//chdir($userr);
+
+foreach(glob("*") as $entry){
+    //echo basename($entry)."<br>";
+    if ($entry != "." && $entry != "..") {
+        echo "<a href='./$user/$entry'>".$entry."</a><br>";
+      }
+}
 $dir = $user.'/';
 
-$handle = opendir($dir);
-    while ($entry = readdir($handle)) {
-          if ($entry != "." && $entry != "..") {
-        // if(file_exists($entry)){
-            //echo "<a href='download.php?file=".$entry."'>".$entry."</a>\n";
-            echo "<a href='./$user/$entry' download>".$entry."</a><br>";
-          //  echo $entry;
-            echo '<br>';
-    // }if($entry = "*.*"){
-     // echo 'folder'.$entry;
-     }
-  }
-    closedir($handle);
+$bareName = pathinfo($dir, PATHINFO_FILENAME);
+echo $bareName;
 
-
-    foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir)) as $f) {
-    echo "$f \r\n".'<br>';   
-}
-
-
-
-if ($handle = opendir('.')) {
-
-    while (false !== ($entry = readdir($handle))) {
-
-        if ($entry != "." && $entry != "..") {
-
-            echo "$entry\n";
-        }
-    }
-
-    closedir($handle);
-}
-echo '<br>';
-
-
-$files = scandir($dir);
-$files = array_diff(scandir($dir), array('.', '..'));
-echo $files;
 
 
 ?>
-<br>
 
 <br>
 <form method="POST" action="nowy_folder.php">
@@ -95,15 +90,21 @@ echo $files;
 <br><br>
 
 
-
+Wybierz folder lub przenieś go w miejsce poniżej.
+<br>
+<br>
 <form action="odbierz.php" method="POST" ENCTYPE="multipart/form-data"> 
-  <input type="file" name="plik"/> 
+  <!--<input  type="file" name="plik"/><br><br>-->
+  <input type="file" name="plik"/><br><br>
   <input type="submit" value="Wyślij plik"/> 
 </form>
 <br><br>
 
-<form action=odbierz.php method="POST" enctype="multipart/form-data" id="yourregularuploadformId">
 
+</body>
+</html>
+<!--
+<form action=odbierz.php method="POST" enctype="multipart/form-data" id="yourregularuploadformId">
 <script type="text/javascript">
 
  
@@ -116,25 +117,88 @@ echo $files;
 </form>
 
 
-
-
 <form>
   <script type="text/javascript">
-    
+   
     fs.readFile('asd/', (err, data) => {
   if (err) throw err;
      console.log(data);
   });
-
+*/
   </script>
-
-
 </form>
+-->
+
+<?php
+/*$user = $_SESSION['user1'];
+$dir = $user.'/';
+$handle = opendir($dir);
+    while ($entry = readdir($handle)) {
+          if ($entry != "." && $entry != "..") {
+        // if(file_exists($entry)){
+            //echo "<a href='download.php?file=".$entry."'>".$entry."</a>\n";
+            echo "<a href='./$user/$entry' download>".$entry."</a><br>";
+          //  echo $entry;
+            echo '<br>';
+    // }if($entry = "*.*"){
+     // echo 'folder'.$entry;
+     }
+  }
+    closedir($handle);*/
 
 
+  //  foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir)) as $f) {
+   // echo "$f \r\n".'<br>';   
+//}
 
 
-<br>
-</table>
-</body>
-</html>
+/*
+if ($handle = opendir('.')) {
+
+    while (false !== ($entry = readdir($handle))) {
+
+        if ($entry != "." && $entry != "..") {
+
+            echo "$entry\n";
+        }
+    }
+    closedir($handle);
+}
+echo '<br>';
+$files = scandir($dir);
+$files = array_diff(scandir($dir), array('.', '..'));
+echo $files;
+*/
+
+/*$userr = $_SESSION['user1'];
+
+$dirr = "..";
+
+// Define a function to output files in a directory
+function outputFiles($dirr){
+    // Check directory exists or not
+    if(file_exists($dirr) && is_dir($dirr)){
+        // Search the files in this directory
+        $files = glob($dirr ."/*");
+        if(count($files) > 0){
+            // Loop through retuned array
+            foreach($files as $file){
+                if(is_file("$file")){
+                    // Display only filename
+                    echo basename($file) . "<br>";
+                } else if(is_dir("$file")){
+                    // Recursively call the function if directories found
+                    outputFiles("$file");
+                }
+            }
+        } else{
+            echo "ERROR: No such file found in the directory.";
+        }
+    } else {
+        echo "ERROR: The directory does not exist.";
+    }
+}
+// Call the function
+//outputFiles("mydir");
+}*/
+?>
