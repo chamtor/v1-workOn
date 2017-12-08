@@ -2,26 +2,25 @@
 session_start();
 if((isset($_SESSION['logged'])) && ($_SESSION['logged']==true))
 {
-header('Location: logged.php');
+
 exit();
 }
-
 if((isset($_COOKIE['cookie_name']))){
     header('Location: logowanieBlok.php');
 }
 else{
+    header('Location: logowanie.php');
 }
-if(isset($_SESSION['blokadaLogowania'])){
 
+?>
+<?php
 /*if((isset($_SESSION['TimeNieudanaProba']))){
     if((time() - $_SESSION['TimeNieudanaProba']) > 180) {
-
+      //allow submission
     } 
     else {
     echo 'You have attempted to login 3 times, please try again later!';
-    }
-}*/
-}
+    }}*/
 ?>
 
 <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
@@ -47,25 +46,8 @@ if(isset($_SESSION['blokadaLogowania'])){
         echo $_COOKIE['Nick'];                          //sprawdzanie czy nick został wpisany
         } ?>" required ><br>
   Hasło: <br/> <input type="Password" name="pass" required> <br/>
-  <input type="submit" value="Login"/> <br><br>
 
 </form>
-<?php
-
-if((isset($_SESSION['blokadaLogowania']))){
-  echo $_SESSION['blokadaLogowania'];
-}
-  if(isset($_SESSION['blad'])) {
-    unset($_SESSION['zle']);
-    echo $_SESSION['blad'];
-
-   if(isset($_SESSION['blokadaLogowania'])){
-    unset($_SESSION['zle']);
-    unset($_SESSION['blad']);
-    echo $_SESSION['blokadaLogowania'];
-}
-  }
-?>
 
   <br>
   <h1> Rejestracja</h1><br>
@@ -80,39 +62,6 @@ if((isset($_SESSION['blokadaLogowania']))){
   <input type="submit" value="Register"/><br>
 </form>
 
-
-<?php
-  if(isset($_SESSION['zle'])){
-     echo $_SESSION['zle'];
-     unset($_SESSION['blad']);
-     unset($_SESSION['zle']);
-     unset($_SESSION['userIstnieje']);
-  } 
-  if(isset($_SESSION['utworzone'])){
-     unset($_SESSION['blad']);
-     unset($_SESSION['zle']);
-     unset($_SESSION['userIstnieje']);
-     echo $_SESSION['utworzone']."<br>";
-     echo $_SESSION['utworzone2'];
-  }
-  if(isset($_SESSION['istnieje'])){
-    unset($_SESSION['zle']);
-    unset($_SESSION['blad']);
-    unset($_SESSION['utworzenie']);
-    unset($_SESSION['utworzenie2']);
-    echo $_SESSION['istnieje']."<br>";
-  }
-/*  if(isset($_SESSION['blad'])){
-    unset($_SESSION['istnieje']);
-    unset($_SESSION['utworzenie']);
-    unset($_SESSION['utworzenie2']);
-    echo $_SESSION['blad'];
-    //session_unset();
-  }*/
-  if(isset($_SESSION['userIstnieje'])){
-  echo $_SESSION['userIstnieje'];
-  }
-?>
 <br>
 
 <script>

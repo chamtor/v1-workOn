@@ -6,13 +6,19 @@ if((isset($_SESSION['logged'])) && ($_SESSION['logged']==true))
   header('Location: logged.php');
   exit();
 }
+
+}
+else{
+
+}
+
 ?>
 <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
 <html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"pl-PL\">
 <head>
     <meta http-equiv="refresh" content="1000" /> 
     <link rel="stylesheet" type="text/css" href="style.css">
-  
+
     <title>Zdunowski</title>
 
 </head>
@@ -28,29 +34,31 @@ if((isset($_SESSION['logged'])) && ($_SESSION['logged']==true))
 if(isset($_SESSION['user1'])){
   echo "<p>Welcome: "." ".$_SESSION['user1']."!";
 }
+
 ?>
 <br><br>
-
 <?php
+
 if(isset($_SESSION['TimeNieudanaProba'])){
 echo "Ostatnia nieudana próba logowanie nastąpiła:"." ".$_SESSION['TimeNieudanaProba'];
-//echo $_SESSION['TimeNieudanaProba'];
 } 
-?> 
 <br><br>
 Twoje pliki:
 <br>
+
+
+
 <?php
 $userr = $_SESSION['user1'];
 chdir($userr);
-
 foreach(glob("*.*") as $entry){
     //echo basename($entry)."<br>";
     if ($entry != "." && $entry != "..") {
         echo "<a href='./$user/$entry' download>".$entry."</a><br>";
       }
-}
-?>
+
+}?>
+
 <br>
 Twoje Foldery:
 <br>
@@ -58,29 +66,43 @@ Twoje Foldery:
 
 
 
-</div>
+
 
 
 
 <?php
-
-$userr = $_SESSION['user1'];
-//chdir($userr);
-
-foreach(glob("*") as $entry){
-    //echo basename($entry)."<br>";
-    if ($entry != "." && $entry != "..") {
-        echo "<a href='./$user/$entry'>".$entry."</a><br>";
-      }
+$katalog = '.';
+$kat = opendir($katalog);
+while ($plik = readdir($kat))
+{
+   if(is_dir($plik))
+   {
+    if ($entry = "." && $entry = "..") 
+      {
+        echo "<form method='post' action='folder.php'>";
+        echo "</br><input type='submit' name='plik' value='$plik' style='height:30px; width:130px' >";
+        echo "</form>";
+       }  
+    }
 }
-$dir = $user.'/';
-
-$bareName = pathinfo($dir, PATHINFO_FILENAME);
-echo $bareName;
-
-
-
+closedir($kat);
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+<br>
 
 <br>
 <form method="POST" action="nowy_folder.php">
@@ -95,7 +117,7 @@ Wybierz folder lub przenieś go w miejsce poniżej.
 <br>
 <form action="odbierz.php" method="POST" ENCTYPE="multipart/form-data"> 
   <!--<input  type="file" name="plik"/><br><br>-->
-  <input type="file" name="plik"/><br><br>
+  <input id="drop_zone" type="file" name="plik"/><br><br>
   <input type="submit" value="Wyślij plik"/> 
 </form>
 <br><br>
@@ -103,6 +125,28 @@ Wybierz folder lub przenieś go w miejsce poniżej.
 
 </body>
 </html>
+
+
+
+<?php
+/*
+$userr = $_SESSION['user1'];
+//chdir($userr);
+
+foreach(glob("*") as $entry){
+    //echo basename($entry)."<br>";
+    if ($entry != "." && $entry != "..") {
+        echo "<a href='./$user/$entry'>".$entry."</a><br>";
+      }
+}
+$dir = $user.'/';
+
+$bareName = pathinfo($dir, PATHINFO_FILENAME);
+echo $bareName;
+*/
+?>
+
+
 <!--
 <form action=odbierz.php method="POST" enctype="multipart/form-data" id="yourregularuploadformId">
 <script type="text/javascript">

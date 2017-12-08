@@ -22,7 +22,13 @@ session_start();
 			if(!$rekord) //Jeśli brak, to nie ma użytkownika o podanym loginie
 			{
 			mysqli_close($link); // zamknięcie połączenia z BD
-			echo "Błąd logowania - spróbuj ponowanie!"; // UWAGA nie wyświetlamy takich podpowiedzi dla hakerów
+			//echo "<script>Błąd logowania - spróbuj ponowanie!"; // UWAGA nie wyświetlamy takich podpowiedzi dla hakerów
+				echo '<script type="text/javascript">';
+				echo 'alert("Błąd logowania - spróbuj ponowanie!");';
+				echo '</script>';
+				echo("<script>window.location = '../klient/logowanie.php';</script>");
+				//header('Location: logowanie.php');
+
 			}
 				else{ // Jeśli $rekord (login) istnieje
 					if($rekord['haslo']==$pass) // czy hasło zgadza się z BD
@@ -39,24 +45,28 @@ session_start();
 					if(!is_dir($user)){
 						mkdir($user, 0777);
 
-					}
-
-
+						}	
 					}
 				else
 					{
 						if($liczbaProb<4){
-							$_SESSION['blad'] = '<span style="color:red">The username or password you entered is incorrect, please try again.</span>';
+							$_SESSION['blad'] = '<span style="color:red">Login albo hasło jest nieprawidłowe, spróbuj ponownie.</span>';
 							
 							$bladLogowania = mysqli_query($link, "UPDATE logi SET proby=proby+1 WHERE login='$user' ");
-							
+							$updateT = mysqli_query($link, "UPDATE logi SET data ='$dateee' WHERE login='$user' ");
+							$updateTime1 = mysqli_query($link, "SELECT data  FROM logi  WHERE login='$user' ");
+							while ($row = $updateTime1->fetch_assoc()) {
+							    $updateTime2 = $row['data']."<br>";
+							}
+							$_SESSION['TimeNieudanaProba'] = $updateTime2;
+				
 							unset($_SESSION['utworzenie']);
 					   		unset($_SESSION['utworzenie2']);	
 							header('Location: logowanie.php');
 							}
-						elseif($liczbaProb>=4){
-								
-							$_SESSION['time_of_block'] = time();
+							
+						if($liczbaProb>=4)
+							{
 							$updateT = mysqli_query($link, "UPDATE logi SET data ='$dateee' WHERE login='$user' ");
 							$updateTime1 = mysqli_query($link, "SELECT data  FROM logi  WHERE login='$user' ");
 							while ($row = $updateTime1->fetch_assoc()) {
@@ -66,10 +76,11 @@ session_start();
 							unset($_SESSION['blad']);
 							$_SESSION['blokadaLogowania'] = 'Nieudane próby logowania - konto zostało zablokowane na minute';
 
-							header('Location: asd.php');
-							//$_SESSION['blok'] = 
+							$cookie_name = $user;
+							$cookie_value = "Użytkownik zablokowany";
+							setcookie($cookie_name, $cookie_value, time() + 60);
+							header('Location: logowanieBlok.php');
 						}
-
 					}
 				}	
 	

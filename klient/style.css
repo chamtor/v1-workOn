@@ -48,11 +48,17 @@ th {
     font-size: 18px;
 }
 
+.button {
+   background-color: white;
+    color: black;
+    border: 2px solid #4CAF50; /* Green */
+}
 #drop_zone{
     background-color: #EEE;
-    width: 150px;
-    height: 150px;
-    padding: 8;
+    
+    width: 350px;
+    height: 250px;
+   
     margin-right: auto;
     margin-left: auto;
     text-align: center;
